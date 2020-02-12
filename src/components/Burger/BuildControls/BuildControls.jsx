@@ -19,7 +19,7 @@ const BuildControls = (props) => {
                     label={ctrl.label}
                     added={() => props.ingredientAdded(ctrl.type)}
                     removed={() => props.ingredientRemoved(ctrl.type)}
-                    disabled={props.disabled[ctrl.type]}
+                    disabled={props.disableRemoveButtonInfo[ctrl.type]}
                 />
             ))}
             <button className={classes.OrderButton} disabled={!props.purchasable}>ORDER NOW</button>
