@@ -3,7 +3,6 @@ import Auxiliary from '../../hoc/Auxiliary'
 import Burger from '../../components/Burger/Burger'
 import BuildControls from '../../components/Burger/BuildControls/BuildControls'
 
-
 const INGREDIENT_PRICES = {
     salad: 0.5,
     cheese: 0.4,
@@ -14,12 +13,12 @@ const INGREDIENT_PRICES = {
 class BurgerBuilder extends Component {
     state = {
         ingredients: {
-            salad: 1,
-            bacon: 1,
-            cheese: 2,
-            meat: 2,
+            salad: 0,
+            bacon: 0,
+            cheese: 0,
+            meat: 0,
         },
-        totalPrice: 4
+        totalPrice: 4.0
     }
 
     addIngridientHandler = (type) => {
@@ -59,6 +58,13 @@ class BurgerBuilder extends Component {
 
 
     render() {
+        const disabledInfo = {
+            ...this.state.ingredients
+        }
+        for (let key in disabledInfo) {
+            disabledInfo[key] = disabledInfo[key] <= 0
+        }
+
         return (
             <Auxiliary>
                 <Burger ingredients={this.state.ingredients}></Burger>
@@ -66,6 +72,8 @@ class BurgerBuilder extends Component {
                 <BuildControls
                     ingredientAdded={this.addIngridientHandler}
                     ingredientRemoved={this.removeIngridientHandler}
+                    disabled={disabledInfo}
+                    price={this.state.totalPrice}
                 />
             </Auxiliary>
         );
