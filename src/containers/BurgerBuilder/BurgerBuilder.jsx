@@ -26,6 +26,7 @@ class BurgerBuilder extends Component {
     };
 
     componentDidMount() {
+        console.log(this.props);
         axios.get("/ingredients.json")
             .then(response => {
                 this.setState({ ingredients: response.data });
@@ -36,7 +37,7 @@ class BurgerBuilder extends Component {
             })
     }
 
-    addIngridientHandler = (type) => {
+    addIngredientHandler = (type) => {
         const oldCount = this.state.ingredients[type];
         const oldPrice = this.state.totalPrice;
 
@@ -80,7 +81,7 @@ class BurgerBuilder extends Component {
             .reduce((sum, el) => {
                 return sum + el;
             });
-        this.setState({ purchaseable: sum > 0 })
+        this.setState({ purchasable: sum > 0 })
     }
 
     purchaseHandler = () => {
@@ -110,6 +111,7 @@ class BurgerBuilder extends Component {
                 console.log(error);
                 this.setState({ loading: false, purchasing: false })
             });
+        this.props.history.push('/checkout');
     };
 
     render() {
@@ -134,7 +136,7 @@ class BurgerBuilder extends Component {
             burger = <Auxiliary>
                 <Burger ingredients={this.state.ingredients}/>
                 <BuildControls
-                    ingredientAdded={this.addIngridientHandler}
+                    ingredientAdded={this.addIngredientHandler}
                     ingredientRemoved={this.removeIngredientHandler}
                     disableRemoveButtonInfo={disabledInfo}
                     price={this.state.totalPrice}
